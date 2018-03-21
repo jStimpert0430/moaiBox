@@ -1,0 +1,15 @@
+'SUPERCARD RFID launcher system
+'Version 0.1.2 - In Development
+
+'This program is intended to be used in conjunction with an Arduino and RC522 RFID module running custom software in order to launch various shortcuts or webpages using a 1kb RFID card's 4 byte UID as a unique primary key to read and store data in an OleDb structure.
+'A simple tutorial program written for Arduino <-> Visual Basic communication authored by Martyn Currey was used as a base for this project and can be found at - "http://www.martyncurrey.com/arduino-and-visual-basic-part-1-receiving-data-from-the-arduino/"
+
+CHANGELOG
+
+V 0.1.2
+	-Reworked card storage from an array of card objects to an oleDB stytem. Instead of reading through an array of objects on scan, now a query is sent to the data source to check for a match. --Add new card functionality is broken temporarily
+	-Cleaned up and commented code reworked
+
+V 0.1.1 
+	-Main program functionality added, Ability to read card data from arduino and act accordingly works as expected
+	
