@@ -6,7 +6,7 @@
 'A simple tutorial program written for Arduino <-> Visual Basic communication authored by Martyn Currey was used as a base for this project and can be found at - "http://www.martyncurrey.com/arduino-and-visual-basic-part-1-receiving-data-from-the-arduino/"
 
 Option Explicit On
-Option Strict On
+'Option Strict On
 Imports System
 Imports System.IO
 Imports System.IO.Ports
@@ -28,22 +28,30 @@ End Module
 
 Public Class Form1
 
+    Const VERSION As String = "0.2.0"
     Dim comPORT As String
     Dim receivedData As String = ""
     Dim tempFilename As String
     Dim tempFilePath As String
     Dim validCard As Boolean = False
+    Dim arduinoConnected As Boolean = False
+    Dim ports As String() = SerialPort.GetPortNames()
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Me.Text = "SUPERCARD RFID Launcher v." + VERSION
         Call connection()
         Timer1.Enabled = False
         comPORT = ""
+        autoconnect()
+        connect_BTN.PerformClick()
 
-        For Each sp As String In My.Computer.Ports.SerialPortNames
-            ComPortToolStripMenuItem.DropDownItems.Add(sp)
+        '
+        For Each sp As String In ports 'My.Computer.Ports.SerialPortNames
+            'ComPortToolStripMenuItem.DropDownItems.Add(sp)
             'ComPortToolStripMenuItem.DropDownItems.Item
             comPort_ComboBox.Items.Add(sp)
         Next
+        'autoDetect()
     End Sub
 
     'Set current com port to that selected in the combo box when changed
@@ -71,10 +79,13 @@ Public Class Form1
 
                 'open communication with arduino
                 SerialPort1.Open()
+                SerialPort1.DiscardInBuffer()
+                SerialPort1.DiscardOutBuffer()
+                'SerialPort1.Write("aaa")
                 connect_BTN.Text = "Dis-connect"
                 Timer1.Enabled = True
                 Timer_LBL.Text = "Timer: ON"
-                lblStatusConnection.Text = "Scanner: Connected and listening to SUPERCARD on " + comPORT
+                lblStatusConnection.Text = "Scanner: OK! Ready to read data.                                SUPERCARD on " + comPORT
                 RichTextBox1.Text &= "Connected to scanner... Now listening for cards." & vbCrLf & vbCrLf
             Else
                 MsgBox("Select a COM port first")
@@ -111,7 +122,7 @@ Public Class Form1
                 End With
                 While dr.Read()
                     txtSFX.Text = dr("sfxFilePath").ToString
-                    If PlaySoundsToolStripMenuItem.Checked Then
+                    If ComPortToolStripMenuItem.Checked Then
                         If (txtSFX.Text = "") Then
                             My.Computer.Audio.Play(My.Resources.kaching, AudioPlayMode.Background) 'TODO: Link this sound effect to a possible user set one, or just use the default
                         Else
@@ -140,12 +151,16 @@ Public Class Form1
                     myProcess.StartInfo.FileName = txtFileName.Text
                     myProcess.Start()
                     RichTextBox1.Text &= "Now Launching " + txtShortcut.Text + "..." & vbCrLf & vbCrLf
+                    If (ConnectToolStripMenuItem2.Checked And Me.WindowState = FormWindowState.Minimized) Then
+                        NotifyIcon1.BalloonTipText = "SUPERCARD: Now Launching - " + txtShortcut.Text + "..."
+                        NotifyIcon1.ShowBalloonTip(250)
+                    End If
                 End While
                 cn.Close()
                 'Exit Sub
                 'Card scan ok, but no link logic
                 If validCard = False Then
-                    If PlaySoundsToolStripMenuItem.Checked Then
+                    If ComPortToolStripMenuItem.Checked Then
                         My.Computer.Audio.Play(My.Resources.FFVIINo2, AudioPlayMode.Background)
                     End If
                     RichTextBox1.Text &= "ERROR: No link has been created for this card... Add link to a program below" & vbCrLf & vbCrLf
@@ -175,7 +190,7 @@ Public Class Form1
             grpStatus.Text = "Last Scan -  " + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")
 
             'Total card read error
-        ElseIf receivedData <> "" Then
+        ElseIf receivedData <> "" And receivedData <> "OK" Then
             RichTextBox1.Text &= "Scan Error" & vbCrLf
             lblStatus.Text = "Card Read Error"
             grpStatus.BackColor = Color.PaleVioletRed
@@ -296,7 +311,7 @@ Public Class Form1
         Application.Exit()
     End Sub
 
-    Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
+    Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs)
         MsgBox("                                       -SUPERCARD RFID Launcher-" + vbCrLf + "                                       Version 0.1.2 (In Development)" + vbCrLf + vbCrLf + "System designed and programmed by: Joshua Stimpert" + vbCrLf + vbCrLf + "Contact: jStimpert0430@gmail.com" + vbCrLf + "-------------------------------------------------------------" + vbCrLf + vbCrLf + vbCrLf + "This program is intended to be used in conjunction with an Arduino and RC522 RFID module running custom software in order to launch various user made shortcuts and webpages using a 1kb RFID card's 4 byte UID as a primary key")
     End Sub
 
@@ -334,7 +349,7 @@ Public Class Form1
 
     Private Sub btnSoundPreview_Click(sender As Object, e As EventArgs) Handles btnSoundPreview.Click
         If txtSFX.Text <> "" Then
-            If PlaySoundsToolStripMenuItem.Checked Then
+            If ComPortToolStripMenuItem.Checked Then
                 My.Computer.Audio.Play(txtSFX.Text, AudioPlayMode.Background) 'TODO: Link this sound effect to a possible user set one, or just use the default
             End If
         End If
@@ -346,5 +361,111 @@ Public Class Form1
         Me.Validate()
         Me.Table1BindingSource.EndEdit()
         ' Me.Table1TableAdapter.Update(Me.CardStorageDataSet.Table1)
+    End Sub
+
+    Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
+        If Me.WindowState = FormWindowState.Minimized Then
+            NotifyIcon1.Visible = True
+            Me.Hide()
+            NotifyIcon1.BalloonTipText = "'SUPERCARD RFID launcher' minimized to system tray. Click icon in tray reopen."
+            NotifyIcon1.ShowBalloonTip(350)
+        End If
+    End Sub
+
+    Private Sub NotifyIcon1_DoubleClick(sender As Object, e As EventArgs) Handles NotifyIcon1.DoubleClick
+    End Sub
+
+    Private Sub NotifyIcon1_Click(sender As Object, e As EventArgs) Handles NotifyIcon1.Click
+    End Sub
+
+    Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles NotifyIcon1.BalloonTipClicked
+        'If Me.WindowState = FormWindowState.Minimized Then
+        'NotifyIcon1.Visible = False
+        'Me.Show()
+        'Me.WindowState = FormWindowState.Normal
+        ' End If
+    End Sub
+
+    Private Sub ExitToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem1.Click
+        Application.Exit()
+    End Sub
+
+    Private Sub NotifyIcon1_MouseClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon1.MouseClick
+        If e.Button = MouseButtons.Left Then
+            NotifyIcon1.Visible = False
+            Me.Show()
+            Me.WindowState = FormWindowState.Normal
+        End If
+
+    End Sub
+
+    Private Sub autoconnect()
+        While True
+
+            For Each p As String In My.Computer.Ports.SerialPortNames
+                Try
+                    Using com As IO.Ports.SerialPort =
+               My.Computer.Ports.OpenSerialPort(p)
+                        com.ReadTimeout = 2000
+                        com.WriteTimeout = 1000
+                        com.BaudRate = 9600
+                        com.DataBits = 8
+                        com.Parity = Parity.None
+                        com.StopBits = StopBits.One
+                        com.Handshake = Handshake.None
+                        com.Encoding = System.Text.Encoding.Default 'very important!
+                        Try
+                            com.Write("-")
+                        Catch ex As Exception
+                        End Try
+
+                        Dim data As String = com.ReadExisting()
+
+                        If InStr(data, "OK") Then
+                            comPORT = p
+                            lblStatusConnection.Text = "Scanner: Connected and listening to SUPERCARD on " + comPORT
+                            com.DiscardInBuffer()
+                            com.DiscardOutBuffer()
+                            Exit While
+                        End If
+                        com.Close()
+                    End Using
+                Catch ex As Exception
+                End Try
+            Next
+        End While
+    End Sub
+
+
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        'myThread.Start()
+        autoconnect()
+
+    End Sub
+
+    Private Sub ComPortDropdown_Click(sender As Object, e As EventArgs) Handles ComPortDropdown.Click
+
+    End Sub
+
+    Private Sub ComPortToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ComPortToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub ShowBalloonTipsOnLaunchToolStripMenuItem_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub PlaySoundsToolStripMenuItem_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub ConnectToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ConnectToolStripMenuItem2.Click
+
+    End Sub
+
+    Private Sub AboutToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem1.Click
+        MsgBox("                                       -SUPERCARD RFID Launcher-" + vbCrLf + "                                       Version 0.1.2 (In Development)" + vbCrLf + vbCrLf + "System designed and programmed by: Joshua Stimpert" + vbCrLf + vbCrLf + "Contact: jStimpert0430@gmail.com" + vbCrLf + "-------------------------------------------------------------" + vbCrLf + vbCrLf + vbCrLf + "This program is intended to be used in conjunction with an Arduino and RC522 RFID module running custom software in order to launch various user made shortcuts and webpages using a 1kb RFID card's 4 byte UID as a primary key")
+
     End Sub
 End Class

@@ -51,27 +51,35 @@ Partial Class Form1
         Me.txtSFX = New System.Windows.Forms.TextBox()
         Me.btnFileBrowse = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Button3 = New System.Windows.Forms.Button()
         Me.grpStatus = New System.Windows.Forms.GroupBox()
         Me.lblStatusName = New System.Windows.Forms.Label()
         Me.lblStatusUID = New System.Windows.Forms.Label()
         Me.lblStatusConnection = New System.Windows.Forms.Label()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PlaySoundsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ComPortDropdown = New System.Windows.Forms.ToolStripMenuItem()
         Me.ComPortToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConnectToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Table1DataGridView = New System.Windows.Forms.DataGridView()
         Me.Table1BindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ConnectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExitToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.timerArduinoDetection = New System.Windows.Forms.Timer(Me.components)
+        Me.PlaySoundsWhenMinimizedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AboutToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.grpStatus.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.Table1DataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Table1BindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'comPort_ComboBox
@@ -83,6 +91,7 @@ Partial Class Form1
         Me.comPort_ComboBox.Name = "comPort_ComboBox"
         Me.comPort_ComboBox.Size = New System.Drawing.Size(121, 28)
         Me.comPort_ComboBox.TabIndex = 7
+        Me.comPort_ComboBox.Visible = False
         '
         'COMport_LBL
         '
@@ -93,6 +102,14 @@ Partial Class Form1
         Me.COMport_LBL.Size = New System.Drawing.Size(78, 20)
         Me.COMport_LBL.TabIndex = 17
         Me.COMport_LBL.Text = "COM Port"
+        Me.COMport_LBL.Visible = False
+        '
+        'SerialPort1
+        '
+        Me.SerialPort1.DiscardNull = True
+        Me.SerialPort1.ReadTimeout = 1000
+        Me.SerialPort1.WriteBufferSize = 64
+        Me.SerialPort1.WriteTimeout = 10000
         '
         'RichTextBox1
         '
@@ -130,7 +147,7 @@ Partial Class Form1
         'connect_BTN
         '
         Me.connect_BTN.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.connect_BTN.Location = New System.Drawing.Point(491, 83)
+        Me.connect_BTN.Location = New System.Drawing.Point(397, 112)
         Me.connect_BTN.Name = "connect_BTN"
         Me.connect_BTN.Size = New System.Drawing.Size(120, 32)
         Me.connect_BTN.TabIndex = 8
@@ -164,6 +181,8 @@ Partial Class Form1
         Me.txtUID.Name = "txtUID"
         Me.txtUID.Size = New System.Drawing.Size(157, 20)
         Me.txtUID.TabIndex = 1
+        Me.ToolTip1.SetToolTip(Me.txtUID, "The UID is the card's Unique Identification, scan a card to automatically add it'" &
+        "s UID to this field.")
         '
         'txtShortcut
         '
@@ -218,6 +237,7 @@ Partial Class Form1
         '
         'Button1
         '
+        Me.Button1.Enabled = False
         Me.Button1.Location = New System.Drawing.Point(197, 238)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(209, 23)
@@ -227,12 +247,11 @@ Partial Class Form1
         '
         'lblStatus
         '
-        Me.lblStatus.AutoSize = True
-        Me.lblStatus.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
+        Me.lblStatus.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblStatus.ForeColor = System.Drawing.SystemColors.MenuHighlight
-        Me.lblStatus.Location = New System.Drawing.Point(18, 97)
+        Me.lblStatus.Location = New System.Drawing.Point(114, 112)
         Me.lblStatus.Name = "lblStatus"
-        Me.lblStatus.Size = New System.Drawing.Size(257, 20)
+        Me.lblStatus.Size = New System.Drawing.Size(280, 21)
         Me.lblStatus.TabIndex = 35
         Me.lblStatus.Text = "Scan card to see Link details below"
         Me.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -317,6 +336,7 @@ Partial Class Form1
         '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.Button3)
         Me.GroupBox2.Controls.Add(Me.grpStatus)
         Me.GroupBox2.Controls.Add(Me.lblStatusConnection)
         Me.GroupBox2.Controls.Add(Me.Timer_LBL)
@@ -324,7 +344,7 @@ Partial Class Form1
         Me.GroupBox2.Controls.Add(Me.COMport_LBL)
         Me.GroupBox2.Controls.Add(Me.comPort_ComboBox)
         Me.GroupBox2.Controls.Add(Me.connect_BTN)
-        Me.GroupBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox2.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.Location = New System.Drawing.Point(9, 37)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(623, 213)
@@ -332,14 +352,25 @@ Partial Class Form1
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Status Box"
         '
+        'Button3
+        '
+        Me.Button3.Location = New System.Drawing.Point(507, 171)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(75, 23)
+        Me.Button3.TabIndex = 25
+        Me.Button3.Text = "Button3"
+        Me.Button3.UseVisualStyleBackColor = True
+        Me.Button3.Visible = False
+        '
         'grpStatus
         '
+        Me.grpStatus.AutoSize = True
         Me.grpStatus.Controls.Add(Me.lblStatusName)
         Me.grpStatus.Controls.Add(Me.lblStatus)
         Me.grpStatus.Controls.Add(Me.lblStatusUID)
         Me.grpStatus.Location = New System.Drawing.Point(39, 59)
         Me.grpStatus.Name = "grpStatus"
-        Me.grpStatus.Size = New System.Drawing.Size(429, 144)
+        Me.grpStatus.Size = New System.Drawing.Size(552, 156)
         Me.grpStatus.TabIndex = 1
         Me.grpStatus.TabStop = False
         Me.grpStatus.Text = "Last Scan"
@@ -347,20 +378,20 @@ Partial Class Form1
         'lblStatusName
         '
         Me.lblStatusName.AutoSize = True
-        Me.lblStatusName.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.lblStatusName.Location = New System.Drawing.Point(163, 35)
+        Me.lblStatusName.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblStatusName.Location = New System.Drawing.Point(19, 68)
         Me.lblStatusName.Name = "lblStatusName"
-        Me.lblStatusName.Size = New System.Drawing.Size(110, 13)
+        Me.lblStatusName.Size = New System.Drawing.Size(148, 17)
         Me.lblStatusName.TabIndex = 1
         Me.lblStatusName.Text = "Shortcut Name: None"
         '
         'lblStatusUID
         '
         Me.lblStatusUID.AutoSize = True
-        Me.lblStatusUID.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.lblStatusUID.Font = New System.Drawing.Font("Century Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblStatusUID.Location = New System.Drawing.Point(19, 35)
         Me.lblStatusUID.Name = "lblStatusUID"
-        Me.lblStatusUID.Size = New System.Drawing.Size(58, 13)
+        Me.lblStatusUID.Size = New System.Drawing.Size(72, 17)
         Me.lblStatusUID.TabIndex = 0
         Me.lblStatusUID.Text = "UID: None"
         '
@@ -369,13 +400,13 @@ Partial Class Form1
         Me.lblStatusConnection.AutoSize = True
         Me.lblStatusConnection.Location = New System.Drawing.Point(35, 26)
         Me.lblStatusConnection.Name = "lblStatusConnection"
-        Me.lblStatusConnection.Size = New System.Drawing.Size(184, 20)
+        Me.lblStatusConnection.Size = New System.Drawing.Size(206, 21)
         Me.lblStatusConnection.TabIndex = 0
         Me.lblStatusConnection.Text = "Scanner: Not Connected"
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.ComPortDropdown, Me.AboutToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.ComPortDropdown})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Size = New System.Drawing.Size(644, 24)
@@ -384,52 +415,41 @@ Partial Class Form1
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PlaySoundsToolStripMenuItem, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AboutToolStripMenuItem1, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
         '
-        'PlaySoundsToolStripMenuItem
-        '
-        Me.PlaySoundsToolStripMenuItem.Checked = True
-        Me.PlaySoundsToolStripMenuItem.CheckOnClick = True
-        Me.PlaySoundsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.PlaySoundsToolStripMenuItem.Name = "PlaySoundsToolStripMenuItem"
-        Me.PlaySoundsToolStripMenuItem.Size = New System.Drawing.Size(138, 22)
-        Me.PlaySoundsToolStripMenuItem.Text = "Play Sounds"
-        '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(138, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'ComPortDropdown
         '
-        Me.ComPortDropdown.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ComPortToolStripMenuItem, Me.ConnectToolStripMenuItem2})
+        Me.ComPortDropdown.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ComPortToolStripMenuItem, Me.ConnectToolStripMenuItem2, Me.PlaySoundsWhenMinimizedToolStripMenuItem})
         Me.ComPortDropdown.Name = "ComPortDropdown"
-        Me.ComPortDropdown.Size = New System.Drawing.Size(64, 20)
-        Me.ComPortDropdown.Text = "Connect"
+        Me.ComPortDropdown.Size = New System.Drawing.Size(61, 20)
+        Me.ComPortDropdown.Text = "Options"
         '
         'ComPortToolStripMenuItem
         '
+        Me.ComPortToolStripMenuItem.Checked = True
+        Me.ComPortToolStripMenuItem.CheckOnClick = True
+        Me.ComPortToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.ComPortToolStripMenuItem.Name = "ComPortToolStripMenuItem"
-        Me.ComPortToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
-        Me.ComPortToolStripMenuItem.Text = "Com Port"
+        Me.ComPortToolStripMenuItem.Size = New System.Drawing.Size(231, 22)
+        Me.ComPortToolStripMenuItem.Text = "Play Sounds"
         '
         'ConnectToolStripMenuItem2
         '
+        Me.ConnectToolStripMenuItem2.Checked = True
         Me.ConnectToolStripMenuItem2.CheckOnClick = True
-        Me.ConnectToolStripMenuItem2.Enabled = False
+        Me.ConnectToolStripMenuItem2.CheckState = System.Windows.Forms.CheckState.Checked
         Me.ConnectToolStripMenuItem2.Name = "ConnectToolStripMenuItem2"
-        Me.ConnectToolStripMenuItem2.Size = New System.Drawing.Size(125, 22)
-        Me.ConnectToolStripMenuItem2.Text = "Connect"
-        '
-        'AboutToolStripMenuItem
-        '
-        Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(52, 20)
-        Me.AboutToolStripMenuItem.Text = "About"
+        Me.ConnectToolStripMenuItem2.Size = New System.Drawing.Size(231, 22)
+        Me.ConnectToolStripMenuItem2.Text = "Show Taskbar Notifications"
         '
         'Button2
         '
@@ -451,6 +471,50 @@ Partial Class Form1
         Me.Table1DataGridView.Size = New System.Drawing.Size(673, 220)
         Me.Table1DataGridView.TabIndex = 40
         Me.Table1DataGridView.Visible = False
+        '
+        'NotifyIcon1
+        '
+        Me.NotifyIcon1.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.NotifyIcon1.Icon = CType(resources.GetObject("NotifyIcon1.Icon"), System.Drawing.Icon)
+        Me.NotifyIcon1.Text = "NotifyIcon1"
+        Me.NotifyIcon1.Visible = True
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConnectToolStripMenuItem, Me.ExitToolStripMenuItem1})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(120, 48)
+        '
+        'ConnectToolStripMenuItem
+        '
+        Me.ConnectToolStripMenuItem.Name = "ConnectToolStripMenuItem"
+        Me.ConnectToolStripMenuItem.Size = New System.Drawing.Size(119, 22)
+        Me.ConnectToolStripMenuItem.Text = "Connect"
+        '
+        'ExitToolStripMenuItem1
+        '
+        Me.ExitToolStripMenuItem1.Name = "ExitToolStripMenuItem1"
+        Me.ExitToolStripMenuItem1.Size = New System.Drawing.Size(119, 22)
+        Me.ExitToolStripMenuItem1.Text = "Exit"
+        '
+        'timerArduinoDetection
+        '
+        Me.timerArduinoDetection.Interval = 150
+        '
+        'PlaySoundsWhenMinimizedToolStripMenuItem
+        '
+        Me.PlaySoundsWhenMinimizedToolStripMenuItem.Checked = True
+        Me.PlaySoundsWhenMinimizedToolStripMenuItem.CheckOnClick = True
+        Me.PlaySoundsWhenMinimizedToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.PlaySoundsWhenMinimizedToolStripMenuItem.Name = "PlaySoundsWhenMinimizedToolStripMenuItem"
+        Me.PlaySoundsWhenMinimizedToolStripMenuItem.Size = New System.Drawing.Size(231, 22)
+        Me.PlaySoundsWhenMinimizedToolStripMenuItem.Text = "Play Sounds When Minimized"
+        '
+        'AboutToolStripMenuItem1
+        '
+        Me.AboutToolStripMenuItem1.Name = "AboutToolStripMenuItem1"
+        Me.AboutToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
+        Me.AboutToolStripMenuItem1.Text = "About"
         '
         'Form1
         '
@@ -478,6 +542,7 @@ Partial Class Form1
         Me.MenuStrip1.PerformLayout()
         CType(Me.Table1DataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Table1BindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -513,8 +578,6 @@ Partial Class Form1
     Friend WithEvents txtSFX As TextBox
     Friend WithEvents MenuStrip1 As MenuStrip
     Friend WithEvents FileToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents PlaySoundsToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents AboutToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ComPortDropdown As ToolStripMenuItem
     Friend WithEvents ComPortToolStripMenuItem As ToolStripMenuItem
@@ -524,4 +587,13 @@ Partial Class Form1
     Friend WithEvents Table1BindingSource As BindingSource
     Friend WithEvents Button2 As Button
     Friend WithEvents Table1DataGridView As DataGridView
+    Friend WithEvents NotifyIcon1 As NotifyIcon
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents ExitToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents ConnectToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents timerArduinoDetection As Timer
+    Friend WithEvents Button3 As Button
+    Friend WithEvents PlaySoundsWhenMinimizedToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AboutToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents ToolTip1 As ToolTip
 End Class

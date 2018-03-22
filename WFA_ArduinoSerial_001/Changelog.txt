@@ -1,10 +1,17 @@
 'SUPERCARD RFID launcher system
-'Version 0.1.2 - In Development
+'Version 0.2.0 - In Development
 
 'This program is intended to be used in conjunction with an Arduino and RC522 RFID module running custom software in order to launch various shortcuts or webpages using a 1kb RFID card's 4 byte UID as a unique primary key to read and store data in an OleDb structure.
 'A simple tutorial program written for Arduino <-> Visual Basic communication authored by Martyn Currey was used as a base for this project and can be found at - "http://www.martyncurrey.com/arduino-and-visual-basic-part-1-receiving-data-from-the-arduino/"
 
 CHANGELOG
+V 0.2.0 
+	-Full DB support implemented
+	-Device Com port auto detection now works--Currently, only seeks on launch and for some reason the knockoff arduino I use will not work with it; only the genuine UNO version. Will need to add optional ability to manually select com port and connect. Currently, only tested working device is a genuine uno
+	-Tweaked UI, Consolodated options, Removed all com port selection options.
+	-Added System tray icon and corrosponding actions
+	-Added Popup bubbles on scan with additional options to hide them and mute sounds when minimized
+
 
 V 0.1.2
 	-Reworked card storage from an array of card objects to an oleDB stytem. Instead of reading through an array of objects on scan, now a query is sent to the data source to check for a match. --Add new card functionality is broken temporarily
