@@ -1,4 +1,4 @@
-# MoaiBox
+# MoaiBox - V 0.2
 
 MoaiBox is an RFID based application launcher which uses an arduino uno, a RC522 rfid module, and a VB.net windows form application in order to link a shortcut to a card and launch it on scan. Supports minizing to taskbar and custom sound effects
 ![Alt text](/relative/path/to/img.jpg?raw=true "program")
@@ -12,12 +12,12 @@ Open visual studio project in a compatable editor of your choice(Project was cre
 
 ### Prerequisites
 
--A windows computer XP or later
--A free USB port
--An Authentic Arduino Uno
--An RC522 rfid read/writer module for arduino
--Miifare 1k Rfid storage medium
--MiguelBabloa's RC522 library (https://github.com/miguelbalboa/rfid)
+1. A windows computer XP or later
+2. A free USB port
+3. An Authentic Arduino Uno
+4. An RC522 rfid read/writer module for arduino
+5. Miifare 1k Rfid storage medium
+6. MiguelBabloa's RC522 library (https://github.com/miguelbalboa/rfid)
 
 ### Installing
 
@@ -49,9 +49,6 @@ Program is open, connected, and ready to read cards!
 -Click update link button at bottom of the program
 -Scan again to see changes.
 
-## Author
-
-Joshua Stimpert
 
 ## Built With
 
@@ -60,12 +57,16 @@ Joshua Stimpert
 
 ## Version History
 
-0.2 - Added Database card info storage / program customization
-0.1 - Initial Version of system
+* 0.2 - Added Database card info storage / program customization
+* 0.1 - Initial Version of system
 
 
 ## Developer notes
 I'm not sure if I'll ever personally get back to this project as when I actually put the use to practice, it wasn't that much more engaging to use than just clicking an icon on the desktop was; That said, feel free to take this, update it, modify it, or use any part of it in your own programs. The Arduino Scanner program only sends the UID of the card in hex format over the serial connection, this could easily be reporposed for any other application requiring a unique number over the com port.
+
+## Author
+
+Joshua Stimpert
 
 ## License
 
