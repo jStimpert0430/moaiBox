@@ -31,6 +31,7 @@ Program is open, connected, and ready to read cards!
 
 
 ## Using the program
+[![Device Demonstration](https://puu.sh/B0Xoj/ed81b4688e.png)](https://www.youtube.com/watch?v=YeyGDXBv5A0&feature=youtu.be "MoaiBox video demonstration")
 
 1. (Device Connection)
 -Once the MoaiBox reader has been assembled, simple plug in and launch the program; The application will attempt to talk to device on the com ports until the MoaiBox itself responds, and initiated the connection logic pointed at that port.
