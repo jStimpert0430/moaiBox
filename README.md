@@ -14,11 +14,11 @@ This system was mainly developed to meet the requirements for a school project i
 
 ## Getting Started
 
-Open visual studio project in a compatable editor of your choice(Project was created in visual studio 2015) then either edit or build
+Open visual studio project in a compatable editor of your choice(Project was created in visual studio 2015) then either edit or build the project
 
 ### Prerequisites
 
-1. A windows computer XP or later
+1. A windows computer XP or newer with at least 64mb of free ram
 2. A free USB port
 3. An Authentic Arduino Uno (Note: From my personal testing, arduino knockoffs that use additional drivers to communicate seem to struggle with the auto connect code; If you want to use a knockoff you might need to re-enable manual com port selection in the code)
 4. An RC522 rfid read/writer module for arduino
@@ -26,6 +26,8 @@ Open visual studio project in a compatable editor of your choice(Project was cre
 6. MiguelBabloa's RC522 library (https://github.com/miguelbalboa/rfid)
 
 ### Installing
+
+![Device Pinouts](DevicePinouts.png)
 
 1. Connect RC522 module to arduino following the pinouts specified on the image included with the project.
 2. (If required) Install Arduino software and drivers to enable COM communication in windows
@@ -40,7 +42,6 @@ Program is open, connected, and ready to read cards!
 
 1. (Device Connection)
 -Once the MoaiBox reader has been assembled, simple plug in and launch the program; The application will attempt to talk to device on the com ports until the MoaiBox itself responds, and initiated the connection logic pointed at that port.
-![Device Pinouts](DevicePinouts.png)
 
 2. (Creating Links)
 -To create a new link, simply scan a card that hasn't been linked with the system to auto fill it's UID.
