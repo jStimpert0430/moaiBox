@@ -15,7 +15,7 @@ Open visual studio project in a compatable editor of your choice(Project was cre
 
 1. A windows computer XP or later
 2. A free USB port
-3. An Authentic Arduino Uno
+3. An Authentic Arduino Uno (Note: From my personal testing, arduino knockoffs that use additional drivers to communicate seem to struggle with the auto connect code; If you want to use a knockoff you might need to re-enable manual com port selection in the code)
 4. An RC522 rfid read/writer module for arduino
 5. Miifare 1k Rfid storage medium
 6. MiguelBabloa's RC522 library (https://github.com/miguelbalboa/rfid)
