@@ -4,6 +4,8 @@ MoaiBox is an RFID based application launcher which uses an arduino uno, a RC522
 
 ![Device Screenshot](moaiBox.png)  
 
+##Program Demonstration
+
 [![Device Demonstration](https://puu.sh/B0Xoj/ed81b4688e.png)](https://www.youtube.com/watch?v=YeyGDXBv5A0&feature=youtu.be "MoaiBox video demonstration")
 
 ## Why
