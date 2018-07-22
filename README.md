@@ -12,6 +12,19 @@ MoaiBox is an RFID based application launcher which uses an Arduino Uno, an RC52
 
 This system was mainly developed to meet the requirements for a school project in a Systems Design and Development course for my Computer Science degree; My main goal in creating this system was to bring tactility to digital content; I miss have to actually handle physical media in order to use it, and had thought this might be a good way to bridge the gap between purely digital content, and the physical media of yesterday; Cards and keyfob scanning seemed like it may have been an interesting solution.
 
+## How does it work?
+
+The program functions by using the card's UID as a primary key in a table which houses a shortcut URI and various other information about the link. Any file that can be referenced by an address or web address can be launched with this application or one can directly launch webpages by inputting a web address instead of a filepath.
+
+
+The bulk of functionality found in this system is housed within the windows form program itself; The only thing the arduino is responsible for is initializing the form, reading the UID of the card, and sending it over the com port. 
+
+On launch, the windows form starts a timer and loops though the com ports found on the system sending a handshake bit and waiting for a reply;
+Once the form recieves an 'OK' from an arduino device plugged into a com port that had been waiting for the handshake bit; both devices switch to the main program loops and are ready to both scanning and reacting.
+At this point, the windows form will continue listening to the com port until it recieves a complete UID that isn't blank, once a valid UID is recieved; The form performs a select statement on a local database to see if there are any matching UID's already housed here.
+If there are, the form will launch the shortcut tied to this entry, set the textboxes in the form to their corrosponding data, show any notifications, and change to card update mode;
+If not, the form will copy the new UID of the card into the UID Textbox and switch to new card mode.
+
 ## Getting Started
 
 Open visual studio project in a compatable editor of your choice(Project was created in visual studio 2015) then either edit or build the project
