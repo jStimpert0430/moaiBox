@@ -4,7 +4,7 @@ MoaiBox is an RFID based application launcher which uses an arduino uno, a RC522
 ![Alt text](/relative/path/to/img.jpg?raw=true "program")
 ## Why
 
-This System was mainly developed to meet the requirements for a project in a Systems design and development class; My main goal in creating this system was to bring tactility to digital content; I was tired of interacting with my computer software with only clicks and licenses. I thought it might be interesting to launch computer applications with a card or keyfob instead.
+This system was mainly developed to meet the requirements for a project in a Systems Design and Development for my Computer Science degree; My main goal in creating this system was to bring tactility to digital content; I was tired of interacting with my computer software with only clicks and licenses. I thought it might be interesting to launch computer applications with a card or keyfob instead.
 
 ## Getting Started
 
