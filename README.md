@@ -54,7 +54,7 @@ Program is open, connected, and ready to read cards!
 
 ## Using the program
 
-![Case Design] (caseSteps.png)
+![Case Steps](caseSteps.png)
 
 1. (Device Connection)
 -Once the MoaiBox reader has been assembled, simple plug in and launch the program; The application will attempt to talk to device on the com ports until the MoaiBox itself responds, and initiated the connection logic pointed at that port.
