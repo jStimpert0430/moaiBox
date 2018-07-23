@@ -2,7 +2,7 @@
 
 MoaiBox is an RFID based application launcher which uses an Arduino Uno, an RC522 rfid module, and a VB.net windows form application in order to link a shortcut to a card and launch it on scan. Supports minizing to taskbar and custom sound effects
 
-![Device Screenshot](moaiBox.png)  <!-- .element height="50%" width="50%" -->
+![moaiBox Device Screenshot](moaiBoxDevice.png)
 
 ## Program Demonstration
 
