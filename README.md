@@ -50,11 +50,11 @@ Open visual studio project in a compatable editor of your choice(Project was cre
 
 Program is open, connected, and ready to read cards!
 
-
+![Case Steps](caseSteps.png)
 
 ## Using the program
 
-![Case Steps](caseSteps.png)
+![Program Window](program.png)
 
 1. (Device Connection)
 -Once the MoaiBox reader has been assembled, simple plug in and launch the program; The application will attempt to talk to device on the com ports until the MoaiBox itself responds, and initiated the connection logic pointed at that port.
