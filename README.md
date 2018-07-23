@@ -54,8 +54,6 @@ Program is open, connected, and ready to read cards!
 
 ## Using the program
 
-![Program Window](program.png)
-
 1. (Device Connection)
 -Once the MoaiBox reader has been assembled, simple plug in and launch the program; The application will attempt to talk to device on the com ports until the MoaiBox itself responds, and initiated the connection logic pointed at that port.
 
@@ -71,6 +69,8 @@ Program is open, connected, and ready to read cards!
 -Edit fields in main program as desired
 -Click update link button at bottom of the program
 -Scan again to see changes.
+
+![Program Window](program.png)
 
 
 ## Built With
