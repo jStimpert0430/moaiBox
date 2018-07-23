@@ -50,10 +50,11 @@ Open visual studio project in a compatable editor of your choice(Project was cre
 
 Program is open, connected, and ready to read cards!
 
-![Case Design] (caseSteps.png)
 
 
 ## Using the program
+
+![Case Design] (caseSteps.png)
 
 1. (Device Connection)
 -Once the MoaiBox reader has been assembled, simple plug in and launch the program; The application will attempt to talk to device on the com ports until the MoaiBox itself responds, and initiated the connection logic pointed at that port.
@@ -74,8 +75,11 @@ Program is open, connected, and ready to read cards!
 
 ## Built With
 
-* [Visual Studio 2015 - VB.net](http://www.dropwizard.io/1.0.2/docs/) - Environment and language used
-* [Arduino 1.6.9](https://maven.apache.org/) - To create and upload programs to the Arduino Uno
+* [Visual Studio 2015 - VB.net] - Environment and language used
+* [Arduino 1.6.9] - To create and upload programs to the Arduino Uno
+* [Open SCAD] - Case 3D print design
+* [Ultimaker Cura] - 3D print slicer
+	
 
 ## Version History
 
