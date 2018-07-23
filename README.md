@@ -70,7 +70,9 @@ Program is open, connected, and ready to read cards!
 -Click update link button at bottom of the program
 -Scan again to see changes.
 
-![Program Window](program.png)
+<p align="center">
+  <img src="https://github.com/jStimpert0430/moaiBox/blob/master/program.png/?raw=true" alt="Program Window"/>
+</p>
 
 
 ## Built With
