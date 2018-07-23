@@ -46,6 +46,9 @@ Open visual studio project in a compatable editor of your choice(Project was cre
 3. Open Arduino IDE, click sketch, click include library, add ZIP library, and point to the zip downloaded from MiguelBalboa's repository.
 4. Open sketch_feb28b.ino and flash to Arduino Uno
 5. Open Visual Studio project and either play or compile
+6. OPTIONAL--3D print device case with included cura files(Small version is arduino nano, big version is for an uno)
+
+![Case Design] (caseSteps.png)
 
 Program is open, connected, and ready to read cards!
 
