@@ -48,9 +48,9 @@ Open visual studio project in a compatable editor of your choice(Project was cre
 5. Open Visual Studio project and either play or compile
 6. OPTIONAL--3D print device case with included cura files(Small version is arduino nano, big version is for an uno)
 
-![Case Design] (caseSteps.png)
-
 Program is open, connected, and ready to read cards!
+
+![Case Design] (caseSteps.png)
 
 
 ## Using the program
